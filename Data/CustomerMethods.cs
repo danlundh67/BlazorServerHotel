@@ -99,29 +99,30 @@ class CustomerMethods
         }
 
     }
-    static public void FindCustomer(List<Customer> customers, int custId)
+    static public string FindCustomer(List<Customer> customers, int custId)
     {
-        
+        string output ="";
         int customerIndex = customers.FindIndex(y => y.customerid == custId);
         if (customerIndex == -1)
         {
-            Console.WriteLine("Could not find the customer");
+            output = "Could not find the customer";
         }
         else 
         {
             Customer mycust = customers[customerIndex];
-            Console.Write($" - Customer Id: {mycust.customerid} \n");
-            Console.Write($" - Customer name: {mycust.forename} {mycust.lastname} \n");
-            Console.Write($" - Customer adress: {mycust.adress} \n");
-            Console.Write($" - Customer phone: {mycust.phone} \n");
-            Console.WriteLine($" - Customer email: {mycust.email}");
+            output += $" - Customer Id: {mycust.customerid} ";
+            output +=$" - Customer name: {mycust.forename} {mycust.lastname}";
+            output +=$" - Customer adress: {mycust.adress} ";
+            output +=$" - Customer phone: {mycust.phone} ";
+            output +=$" - Customer email: {mycust.email}";
         }
+        return output;
     }  
 
     static public string PrintCustomer(List<Customer> customers)
     {
-        String outhtml ="<h1> Customers<h1>";
-        outhtml += "------------------------------------------------<br>";
+        String outhtml ="<font size=\"1\">";
+        outhtml += "<br>------------------------------------------------<br>";
         outhtml += "               Customers<br>";
         outhtml += "------------------------------------------------<br>";
         foreach( Customer a in customers)
@@ -133,6 +134,7 @@ class CustomerMethods
             outhtml += $" Customer email: {a.email} <br>";
             outhtml += "------------------------------------------------<br>";
         }
+        outhtml +="</font>";
         return outhtml;
     }
 }

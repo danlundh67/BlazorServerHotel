@@ -1,13 +1,14 @@
 @page "/Customer"
 @using BlazorServerApp.Data
 @inject Service service
+@inject NavigationManager NavigateTo
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Customer</PageTitle>
 
 <h1>Customers</h1>
 <p> Select what you want to do in the drop</p>
 
-<select id="condition" @onclick="@Hide" @bind="@SelectedOpt" >
+<select id="condition" @onclick="@Hide" @bind="@SelectedOpt">
     <option value="0">View/Find Customer</option>
     <option value="1">Add customer</option>
     <option value="2">View All Customers</option>
@@ -15,7 +16,11 @@
 </select>
 
 <button onclick="@TestData.AddTest()">Add testdata!</button>
+<font size="1">
 @((MarkupString) output)
+</font>
+
+
 
 @code {
     
@@ -28,8 +33,8 @@
         if (SelectedOpt=="0")
         {
              //<p>Find a Customers</p>
-            output = "";
-
+            NavigateTo.NavigateTo("FindCustomer");
+            //output = CustomerMethods.FindCustomer(Service.customers, cid);
 
             // Call for find Customer
 

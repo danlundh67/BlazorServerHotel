@@ -1,0 +1,37 @@
+@page "/FindCustomer"
+@using BlazorServerApp.Data
+@using System.IO
+@inject Service service
+
+
+    <input type="text" id="name" name="name" onkeypress="@HandleKeyPress" required minlength="1" maxlength="8" size="10" @bind="@Namer"/>
+            
+    @((MarkupString) houtput)
+
+
+@code {
+        
+        static string Namer {set; get;} ="";
+        int cider;
+        
+        string houtput {set; get;} ="";
+
+        
+        
+        public void HandleKeyPress(KeyboardEventArgs keyboardEventArgs)
+        {
+            
+            if (keyboardEventArgs.Code == "Enter")
+            {
+                 cider= int.Parse(Namer);
+                houtput =cider + " " + CustomerMethods.FindCustomer(Service.customers, cider);
+                
+            }
+        } 
+
+        
+
+       //houtput = "";
+        //houtput = CustomerMethods.FindCustomer(Service.customers, cid);
+
+    }

@@ -1,0 +1,54 @@
+@page "/FindCustomerId"
+@using BlazorServerApp.Data
+@using System.IO
+@inject Service service
+
+@if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label for="@Id">@Label</label>
+    }
+<div class="input-group mb-3 " >
+        <input type="text" class="form-control textbox-parameters" id="@Id" value="@lastname" @onchange="this.OnChange">
+    </div>
+    @((MarkupString)houtput)
+
+@code{
+    public string lastname {set;get;} ="";
+    string LastSubmitResult ="";
+
+    string cider;
+
+       
+    string houtput {set; get;} ="";
+
+    [Parameter] public string Value {get;set;} = "";
+    [Parameter] public EventCallback<string> ValueChanged {get;set;}
+
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public string? Id { get; set; }
+
+  void ValidFormSubmitted(EditContext editContext)
+  {
+    LastSubmitResult = "OnValidSubmit was executed";
+  }
+
+  void InvalidFormSubmitted(EditContext editContext)
+  {
+    LastSubmitResult = "OnInvalidSubmit was executed";
+  }
+
+  private void OnChange(ChangeEventArgs e)
+    {
+        ValueChanged.InvokeAsync(e.Value.ToString());
+        cider= e.Value.ToString()+"";
+        string tmp= "";
+        List<Customer> myCust = new List<Customer>();
+        myCust = Service.customers.Where(x => x.lastname == cider).ToList();
+        tmp ="<h1>Customers matching</h1> " +myCust.Count();
+        foreach (Customer a in myCust)
+        {
+            tmp  += "<br>" + a.lastname + " " + a.forename + " " + a.phone + " " + a.email +"<br>";
+        }
+        houtput =tmp + "end";
+    }
+}

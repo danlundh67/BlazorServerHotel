@@ -4,34 +4,42 @@
 @inject Service service
 
 
-    <input type="text" id="name" name="name" onkeypress="@HandleKeyPress" required minlength="1" maxlength="8" size="10" @bind="@Namer"/>
+    <style>
+    .textbox-parameters{
+        background: Red;
+    }
+</style>
+
+
+
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label for="@Id">@Label</label>
+    }
+    <div class="input-group mb-3 " >
+        <input type="text" class="form-control textbox-parameters" id="@Id" value="@Value" @onchange="this.OnChange">
+    </div>
             
     @((MarkupString) houtput)
 
 
 @code {
         
-        static string Namer {set; get;} ="";
-        int cider;
-        
-        string houtput {set; get;} ="";
+    static string Namer {set; get;} ="";
+    int cider;
+    
+    string houtput {set; get;} ="";
 
-        
-        
-        public void HandleKeyPress(KeyboardEventArgs keyboardEventArgs)
-        {
-            
-            if (keyboardEventArgs.Code == "Enter")
-            {
-                 cider= int.Parse(Namer);
-                houtput =cider + " " + CustomerMethods.FindCustomer(Service.customers, cider);
-                
-            }
-        } 
+    [Parameter] public string Value {get;set;} = "";
+    [Parameter] public EventCallback<string> ValueChanged {get;set;}
 
-        
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public string? Id { get; set; }
 
-       //houtput = "";
-        //houtput = CustomerMethods.FindCustomer(Service.customers, cid);
-
+    private void OnChange(ChangeEventArgs e)
+    {
+        ValueChanged.InvokeAsync(e.Value.ToString());
+        cider= int.Parse(e.Value.ToString());
+        houtput =cider + " " + CustomerMethods.FindCustomer(Service.customers, cider);
     }
+}

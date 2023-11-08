@@ -15,7 +15,7 @@
     <option value="3">Remove Customer</option>
 </select>
 
-<button onclick="@TestData.AddTest()">Add testdata!</button>
+
 <font size="1">
 @((MarkupString) output)
 </font>
@@ -33,7 +33,7 @@
         if (SelectedOpt=="0")
         {
              //<p>Find a Customers</p>
-            NavigateTo.NavigateTo("FindCustomer");
+            NavigateTo.NavigateTo("FindCustomerId");
             //output = CustomerMethods.FindCustomer(Service.customers, cid);
 
             // Call for find Customer
@@ -44,7 +44,7 @@
         {
             //<p>Add a Customers</p>
             //output = "";
-            NavigateTo.NavigateTo("FindCustomerId");
+            NavigateTo.NavigateTo("AddCustomer");
 
             // Call for add a Customer
            

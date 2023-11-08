@@ -1,0 +1,70 @@
+@page "/AddCustomer"
+@using BlazorServerApp.Data
+@using System.IO
+@inject Service service
+
+<h1>Add a Customer</h1>
+<EditForm Model=@Customer OnSubmit=@FormSubmitted>
+    
+  <div class="form-group">
+    <label for="Fname">First Name</label>
+    <InputText @bind-Value=Customer.forename class="form-control" id="Fname" />
+  </div>
+  <div class="form-group">
+    <label for="Lname">Last Name</label>
+    <InputText @bind-Value=Customer.lastname class="form-control" id="Lname" />
+  </div>
+  <div class="form-group">
+    <label for="Sid">Social security id</label>
+    <InputText @bind-Value=Customer.socialId class="form-control" id="Sid" />
+  </div>
+  <div class="form-group">
+    <label for="Adress">Adress</label>
+    <InputText @bind-Value=Customer.adress class="form-control" id="Adress" />
+  </div>
+  <div class="form-group">
+    <label for="email">E-mail</label>
+    <InputText @bind-Value=Customer.email class="form-control" id="email" />
+  </div>
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <InputText @bind-Value=Customer.phone class="form-control" id="phone" />
+  </div>
+  <br><br>
+  <input type="submit" class="btn btn-primary" value="Save"/>
+</EditForm>
+
+@((MarkupString)houtput)
+
+@code {
+
+    public string SocialIdNr = "";
+    public int custid;
+    Customer Customer= new Customer();    
+
+    string houtput="";
+    
+    void FormSubmitted(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+
+        //rmIsValid
+        //? "Success - form was valid"
+        //: "Failure - form was invalid";
+
+        if (Service.customers.Count() < 1)
+        {
+            custid=1;
+        }
+        else
+        {
+            custid=Service.customers[Service.customers.Count() -1].customerid +1;
+        }
+        Customer.customerid=custid;
+        Service.customers.Add(Customer);
+        houtput= "<br><br><b> Customer Added <b>";
+
+  }
+}
+
+    

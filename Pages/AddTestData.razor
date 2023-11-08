@@ -1,0 +1,25 @@
+@page "/AddTestData"
+@using BlazorServerApp.Data
+@inject Service service
+@inject NavigationManager NavigateTo
+
+<PageTitle>Add TestData</PageTitle>
+
+<h1>Customers</h1>
+
+<button onclick="@TestData.AddTest()">Add testdata!</button>
+
+<font size="1">
+@((MarkupString) output)
+</font>
+
+
+
+@code {
+        string output="";
+        void GoHome()
+        {
+           // NavigateTo.NavigateTo("/Customer");
+        }
+        
+    }

@@ -1,0 +1,66 @@
+@page "/Staff"
+@using BlazorServerApp.Data
+@inject Service service
+@inject NavigationManager NavigateTo
+
+<PageTitle>Staff</PageTitle>
+
+<h1>Customers</h1>
+<p> Select what you want to do in the drop down menu</p>
+
+<select id="condition" @onclick="@Hide" @bind="@SelectedOpt">
+    <option value="0">View/Find Customer</option>
+    <option value="1">Add customer</option>
+    <option value="2">View All Customers</option>
+    <option value="3">Remove Customer</option>
+</select>
+
+
+<font size="1">
+@((MarkupString) output)
+</font>
+
+
+
+@code {
+    
+    public string SelectedOpt { get; set; } = "";
+    public string output {get; set;} = "";
+    
+    
+    private void Hide()
+    {
+        if (SelectedOpt=="0")
+        {
+             //<p>Find a Customers</p>
+            NavigateTo.NavigateTo("FindCustomerId");
+            //output = CustomerMethods.FindCustomer(Service.customers, cid);
+
+            // Call for find Customer
+
+            
+        }
+        else if(SelectedOpt=="1")
+        {
+            //<p>Add a Customers</p>
+            //output = "";
+            NavigateTo.NavigateTo("AddCustomer");
+
+            // Call for add a Customer
+           
+        }
+        else if(SelectedOpt=="2")
+        {
+            //<p>All Customers</p>
+            // Call for view all Customers
+             output = CustomerMethods.PrintCustomer(Service.customers);
+        }
+        else if(SelectedOpt=="3")
+        {
+            //<p>Remove a Customer</p>
+            // Call for view all Customers
+           
+            
+        }
+    }
+}

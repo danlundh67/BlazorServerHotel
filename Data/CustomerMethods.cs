@@ -135,6 +135,7 @@ class CustomerMethods
             outhtml += "------------------------------------------------<br>";
         }
         outhtml +="</font>";
+        
         return outhtml;
     }
 }

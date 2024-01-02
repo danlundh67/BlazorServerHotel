@@ -1,4 +1,4 @@
-@page "/Customer"
+@page "/Room"
 @using BlazorServerApp.Data
 @inject Service service
 @inject NavigationManager NavigateTo
@@ -9,10 +9,8 @@
 <p> Select what you want to do in the drop</p>
 
 <select id="condition" @onclick="@Hide" @bind="@SelectedOpt">
-    <option value="0">Make a reservation for a customer</option>
-    <option value="1">Add customer</option>
-    <option value="2">View All Customers</option>
-    <option value="3">Remove customer</option>
+    <option value="0">Add a room</option>
+    <option value="1">view all rooms</option>
 </select>
 
 
@@ -33,7 +31,7 @@
         if (SelectedOpt=="0")
         {
              //<p>Find a Customers</p>
-            NavigateTo.NavigateTo("FindCustomerId");
+            NavigateTo.NavigateTo("AddRoom");
             //output = CustomerMethods.FindCustomer(Service.customers, cid);
 
             // Call for find Customer
@@ -44,23 +42,11 @@
         {
             //<p>Add a Customers</p>
             //output = "";
-            NavigateTo.NavigateTo("AddCustomer");
+            // NavigateTo.NavigateTo("Viewrooms");
+            output = RoomMethods.PrintRooms(Service.rooms);
 
             // Call for add a Customer
            
-        }
-        else if(SelectedOpt=="2")
-        {
-            //<p>All Customers</p>
-            // Call for view all Customers
-             output = CustomerMethods.PrintCustomer(Service.customers);
-        }
-        else if(SelectedOpt=="3")
-        {
-            //<p>Remove a Customer</p>
-            // Call for view all Customers
-           
-            
         }
     }
 }

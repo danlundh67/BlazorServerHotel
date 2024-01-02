@@ -1,0 +1,53 @@
+@page "/AddRoom"
+@using BlazorServerApp.Data
+@using System.IO
+@inject Service service
+
+
+<h1>Add a Room</h1>
+
+<EditForm Model=@BRoom OnSubmit=@FormSubmitted>
+  <div class="form-group">
+      <label for="RoomNr">Room number</label>
+      <InputNumber @bind-Value=BRoom.RoomNr class="form-control" id="RoomNr" />
+      
+  </div>
+  <div class="form-group">
+      <label for="nrbeds">Number of beds</label>
+      <InputNumber @bind-Value=BRoom.NrOfBeds class="form-control" id="nrbeds" />
+  </div>
+  <div class="form-group">
+      <label for="Hcp">Hcp number</label>
+      <InputCheckbox @bind-Value=BRoom.Hcp class="form-control" id="Hcp" />
+  </div>
+  <div class="form-group">
+      <label for="SilentR">Silent Room</label>
+      <InputCheckbox @bind-Value=BRoom.SilentRoom class="form-control" id="SilentR" />
+  </div>
+  <div class="form-group">
+      <label for="FamR">Family Room</label>
+      <InputCheckbox @bind-Value=BRoom.FamilyRoom class="form-control" id="FamR" />
+  </div>
+  <InputSelect @bind-Value="BRoom.Diffbeds">
+      @foreach (var g in Enum.GetValues(typeof(Diffbeds)))
+      {
+          <option value="@g">@g</option>
+      }
+  </InputSelect>  
+  <br><br>
+  <input type="submit" class="btn btn-primary" value="Save"/>
+</EditForm>
+
+@((MarkupString)houtput)
+
+
+@code {
+    BlazorServerApp.Data.Room BRoom = new BlazorServerApp.Data.Room();
+
+    string houtput="";
+    void FormSubmitted(EditContext editContext)
+    {
+        Service.rooms.Add(BRoom);
+        houtput= "<br><br><b> Customer Added <b>";
+    }
+}

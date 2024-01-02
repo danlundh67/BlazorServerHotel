@@ -2,11 +2,13 @@
 @using BlazorServerApp.Data
 @using System.IO
 @inject Service service
+@inject NavigationManager NavigateTo
 
 @if (!string.IsNullOrWhiteSpace(Label))
     {
         <label for="@Id">@Label</label>
     }
+<p>Enter last name</p>
 <div class="input-group mb-3 " >
         <input type="text" class="form-control textbox-parameters" id="@Id" value="@lastname" @onchange="this.OnChange">
     </div>
@@ -18,7 +20,7 @@
     <option value="">Select a Customer</option>
     @foreach (var person in myCust)
     {
-        <option value="@person.customerid">@person.forename   @person.phone  @person.customerid</option>
+        <option value="@person.customerid">@person.forename  phone: @person.phone  @person.customerid</option>
     }
 </select>
 
@@ -88,7 +90,16 @@
     //int selectedPersonName = myCust.First(p => p.customerid == selectedPersonId)?.customerid;
     private void Hide2()
     {
-        houtput2 +=" <br> ------- selected Customer" + selectedPersonId;
+        if (selectedPersonId > 0)
+        {
+            //houtput2 =" <br> ------- selected Customer" + selectedPersonId;
+            NavigateTo.NavigateTo($"/ProcessCustomer/{selectedPersonId}", true);
+        }
+        else 
+        {
+            houtput2 = "";
+        }
+        
     }
 
 }

@@ -1,0 +1,59 @@
+@page "/ProcessCustomer/{Id:int}"
+@using BlazorServerApp.Data
+@inject Service service
+
+
+<h1>Customer Id: @Id</h1>
+
+<p> Reservation for Customer @Id</p
+
+From date:
+<div class="input-group mb-3 " >
+        <input type="text" class="form-control textbox-parameters" id="indate" value="@indate">
+    </div>
+
+ To date:
+<div class="input-group mb-3 " >
+        <input type="text" class="form-control textbox-parameters" id="outdate" value="@outdate">
+    </div>
+
+<button @onclick="SearchRooms">Search rooms</button>
+
+<select @bind="RoomId" @oncheck="@Hide2">
+    <option value="">Select a room</option>
+    @foreach (var room in Service.rooms)
+    {
+        <option value="@room.RoomNr">@room.RoomNr  @room.NrOfBeds  @room.Diffbeds</option>
+    }
+</select>
+
+<font size="1">
+@((MarkupString) output)
+</font>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    public int RoomId {get;set;}
+
+    public string output {set;get;}
+
+    public DateOnly indate {get; set;}
+
+    public DateOnly outdate {get; set;}
+
+    public List<BlazorServerApp.Data.Room> availablerooms = new List<BlazorServerApp.Data.Room>();
+
+    public void SearchRooms()
+    {
+        availablerooms= BlazorServerApp.Data.BookingMethods.ListAvailableRooms(Service.rooms,Service.bookings, indate, outdate);
+    }
+
+    public void Hide2()
+    {
+        output = "Fixat";
+    }
+
+}

@@ -1,4 +1,5 @@
-namespace BlazorServerApp.Data;
+namespace BlazorServerApp.Data
+{
 class CustomerMethods
 {
     static public void AddCustomer(List<Customer> customers)
@@ -66,7 +67,7 @@ class CustomerMethods
         Console.WriteLine("State the lastname:");
         string lname = Console.ReadLine() + "";
         myCust = customers.Where(x => x.lastname == lname).ToList();
-        PrintCustomer(myCust);
+        //PrintCustomer(myCust);
         if (myCust.Count()== 1)
         {
             return myCust[0].customerid;
@@ -76,7 +77,7 @@ class CustomerMethods
             Console.WriteLine("State email:");
             string email = Console.ReadLine() + "";
             myCust = myCust.Where(x => x.email == email).ToList();
-            PrintCustomer(myCust);
+            //PrintCustomer(myCust);
             if (myCust.Count() == 1)
             {
                 return myCust[0].customerid;
@@ -85,7 +86,7 @@ class CustomerMethods
                 Console.WriteLine("State email:");
                 string epost = Console.ReadLine() + "";
                 myCust = myCust.Where(x => x.email == epost).ToList();
-                PrintCustomer(myCust);
+                //PrintCustomer(myCust);
                 if (myCust.Count() == 1)
                 {
                     return myCust[0].customerid;
@@ -137,4 +138,5 @@ class CustomerMethods
         outhtml +="</font>";
         return outhtml;
     }
+}
 }
